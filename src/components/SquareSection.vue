@@ -34,7 +34,6 @@ export default {
         value: current_player.value,
       });
     };
-
     return { current_value, matrix, handleClick, current_player };
   },
 };

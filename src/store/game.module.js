@@ -1,9 +1,12 @@
+import { processWinner } from "../helpers/gameHelpers";
+
 export default {
   namespaced: true,
   state() {
     return {
       current_player: null,
       players: ["⭕", "✖️"],
+      winner: null,
       matrix: [
         [null, null, null],
         [null, null, null],
@@ -18,6 +21,20 @@ export default {
       }
       return state.players[state.current_player];
     },
+    getIsCompleted(state) {
+      let counter = 0;
+      state.matrix.forEach((row) => {
+        row.forEach((cell) => {
+          if (cell !== null) {
+            counter++;
+          }
+        });
+      });
+      return 9 === counter;
+    },
+    getWinner(state) {
+      return state.winner;
+    },
   },
   mutations: {
     setCurrentPlayer(state, payload) {
@@ -30,6 +47,7 @@ export default {
       } else {
         state.current_player = 0;
       }
+      state.winner = processWinner(state);
     },
   },
 };
